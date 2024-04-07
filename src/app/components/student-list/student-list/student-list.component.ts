@@ -35,7 +35,7 @@ export class StudentListComponent {
   currentPage = 1
   paginatedData: any[] = [];
   selectedItems: any[] = [];
-
+  isStudentSelected = true;
   //totalPages: any;
 
   constructor(private fb: FormBuilder) {
@@ -278,6 +278,8 @@ export class StudentListComponent {
         this.selectedItems.splice(index, 1);
       }
     }
+    if(this.selectedItems.length > 0) this.isStudentSelected = false;
+    else this.isStudentSelected = true;
   }
 
   saveToLocalStorage(){

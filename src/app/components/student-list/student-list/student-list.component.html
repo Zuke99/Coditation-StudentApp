@@ -3,7 +3,7 @@
     Add Student
 </button>
 
-<button class="btn btn-danger" (click)="deleteSelected()">Delete Selected</button>
+<button class="btn btn-danger" [disabled]="isStudentSelected" (click)="deleteSelected()">Delete Selected</button>
 
 <table class="table">
     <thead>
