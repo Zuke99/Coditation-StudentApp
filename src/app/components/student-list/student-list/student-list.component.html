@@ -3,11 +3,12 @@
     Add Student
 </button>
 
-
+<button class="btn btn-danger" (click)="deleteSelected()">Delete Selected</button>
 
 <table class="table">
     <thead>
       <tr>
+        <th>Select</th>
         <th>Name</th>
         <th>College</th>
         <th>Gender</th>
@@ -18,6 +19,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let student of paginatedData">
+        <td>
+            <input type="checkbox" [value]="student" (change)="toggleSelection($event, student)" />
+          </td>
         <td>{{ student.studentName }}</td>
         <td>{{ student.college }}</td>
         <td>{{ student.gender }}</td>
@@ -55,7 +59,7 @@
   </nav>
 
 
-  
+
 
 <!-- Modal -->
 <div class="modal modal-dialog-scrollable" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel"

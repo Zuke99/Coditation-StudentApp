@@ -34,6 +34,8 @@ export class StudentListComponent {
   pageSize = 10
   currentPage = 1
   paginatedData: any[] = [];
+  selectedItems: any[] = [];
+
   //totalPages: any;
 
   constructor(private fb: FormBuilder) {
@@ -265,5 +267,30 @@ export class StudentListComponent {
   onPageChange(pageNumber: number): void {
     this.currentPage = pageNumber;
     this.paginateData();
+  }
+  
+  toggleSelection(event: any, student: any): void {
+    if (event.target.checked) {
+      this.selectedItems.push(student);
+    } else {
+      const index = this.selectedItems.findIndex((item) => item === student);
+      if (index !== -1) {
+        this.selectedItems.splice(index, 1);
+      }
+    }
+  }
+
+  saveToLocalStorage(){
+     localStorage.removeItem('StudentData');
+     localStorage.setItem('StudentData',JSON.stringify(this.students));
+     console.log("AfterSaving", JSON.parse(localStorage.getItem('StudentData')));
+     //console.log(this.getExistingStudents());
+  
+  }
+
+  deleteSelected() {
+    for(let i = 0; i < this.selectedItems.length; i++)
+      this.deleteStudent(this.selectedItems[i]);
+    this.selectedItems = [];
   }
 }
