@@ -31,6 +31,10 @@ export class StudentListComponent {
   students: any[] = [];
   isEditModalOpen: any;
   isEditOperation: boolean;
+  pageSize = 10
+  currentPage = 1
+  paginatedData: any[] = [];
+  //totalPages: any;
 
   constructor(private fb: FormBuilder) {
     this.createForm();
@@ -67,14 +71,7 @@ export class StudentListComponent {
       localStorageData.sort((a, b) => (parseInt(a.id) < parseInt(b.id) ? 1 : -1))
       this.students = localStorageData
     }
-    // let initialStudents = StudentData;
-    // let localStorageData = this.getExistingStudents();
-    // initialStudents = [...initialStudents, ...localStorageData];
-    // localStorage.setItem('StudentDetails',JSON.stringify(initialStudents));
-    // initialStudents.sort((a, b) => (parseInt(a.id) < parseInt(b.id) ? 1 : -1));
-    // this.students = initialStudents;
-
-
+    this.paginateData();
   }
   addStudent() {
     this.studentForm.reset();
@@ -250,5 +247,23 @@ export class StudentListComponent {
 
   removeCourse(index: number): void {
     this.courses.removeAt(index);
+  }
+
+  paginateData(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedData = this.students.slice(startIndex, endIndex);
+    console.log("paginateddata", this.paginatedData);
+  }
+
+  get totalPages(): number[] {
+    const totalItems = this.students.length;
+    const totalPages = Math.ceil(totalItems / this.pageSize);
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.paginateData();
   }
 }
