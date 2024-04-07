@@ -1,0 +1,135 @@
+<!-- Button trigger modal -->
+<button (click)="addStudent()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Student
+</button>
+
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>College</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Progress</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.studentName }}</td>
+        <td>{{ student.college }}</td>
+        <td>{{ student.gender }}</td>
+        <td>{{ student.age }}</td>
+        <td>{{ student.progress }}</td>
+        <td>
+          <button (click)="editStudent(student)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Edit</button>
+          <button (click)="deleteStudent(student)" type="button" class="btn btn-danger"  >Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<!-- Modal -->
+<div class="modal modal-dialog-scrollable" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Student</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="submit()" [formGroup]="studentForm">
+                    <div class="form-group">
+                        <label for="studentName">Student Name</label>
+                        <input type="text" id="studentName" class="form-control" formControlName="studentName"
+                            required />
+                        <div
+                            *ngIf="studentForm.get('studentName')?.errors?.['required'] && (studentForm.get('studentName').dirty || studentForm.get('studentName').touched)">
+                            <small class="text-danger">Name is required.</small>
+                        </div>
+
+                        <div
+                            *ngIf="studentForm.get('studentName')?.errors?.['minlength'] && (studentForm.get('studentName').dirty || studentForm.get('studentName').touched)">
+                            <small class="text-danger">Name must contain at least 3 characters.</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="college">Colleges</label>
+                        <ng-select class="form-group" formControlName="college" [items]="collegeList"
+                            [virtualScroll]="true" [loading]="dropDownIsLoading" bindLabel="name" bindValue="name"
+                            (search)="searchCollege($event)" placeholder="Select photo" style="font-family: roboto"
+                            (scrollToEnd)="onScrollToEnd()">
+                            <ng-template ng-header-tmp>
+                                <small class="form-text text-muted">Loaded {{ collegeList.length }} of
+                                    {{ colleges.length }}</small>
+                            </ng-template>
+                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                <b>{{ index }}</b> {{ item.name }}
+                            </ng-template>
+                        </ng-select>
+                        <div
+                            *ngIf="studentForm.get('college')?.errors?.['required'] && (studentForm.get('college').dirty || studentForm.get('college').touched)">
+                            <small class="text-danger">College is required.</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label><br />
+                        <label><input type="radio" formControlName="gender" value="Male" />
+                            Male</label>
+                        <label><input type="radio" formControlName="gender" value="Female" />
+                            Female</label>
+                    </div>
+                    <div
+                        *ngIf="studentForm.get('gender')?.errors?.['required'] && (studentForm.get('gender').dirty || studentForm.get('gender').touched)">
+                        <small class="text-danger">Gender is required.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" class="form-control" formControlName="age" required />
+                    </div>
+                    <div
+                        *ngIf="studentForm.get('age')?.errors?.['required'] && (studentForm.get('age').dirty || studentForm.get('age').touched)">
+                        <small class="text-danger">Age is required.</small>
+                    </div>
+                    <div
+                        *ngIf="(studentForm.get('age')?.errors?.['min'] || studentForm.get('age')?.errors?.['max'])  && (studentForm.get('age').dirty || studentForm.get('age').touched)">
+                        <small class="text-danger">Age Should be above 18 and Below 45.</small>
+                    </div>
+                    <div formArrayName="courses">
+                        <div *ngFor="let course of courses.controls; let i = index" class="form-group"
+                            [formGroupName]="i">
+                            <label>Course {{ i + 1 }}</label>
+                            <input type="text" class="form-control" formControlName="title" placeholder="Title" />
+                            <div
+                                *ngIf="course.get('title').invalid && (course.get('title').dirty || course.get('title').touched)">
+                                <small class="text-danger">Name is required.</small>
+                            </div>
+                            <select class="form-control" formControlName="year" placeholder="Year">
+                                <option *ngFor="let year of years" [value]="year">
+                                    {{ year }}
+                                </option>
+                            </select>
+                            <button type="button" (click)="removeCourse(i)" *ngIf="i !== 0">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" (click)="addCourse()" class="btn btn-primary">
+                        Add Course
+                    </button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button *ngIf="!isEditOperation" type="submit" class="btn btn-primary" >Submit</button>
+                        <button *ngIf="isEditOperation" type="button" class="btn btn-success" (click)="updateStudentDetails()">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

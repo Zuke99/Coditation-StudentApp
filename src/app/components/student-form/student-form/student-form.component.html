@@ -1,0 +1,34 @@
+<form (ngSubmit)="submit()" [formGroup]="studentForm">
+    <div class="form-group">
+      <label for="studentName">Student Name</label>
+      <input type="text" id="studentName" class="form-control" formControlName="studentName" required>
+    </div>
+    <div class="form-group">
+      <label for="college">Colleges</label>
+      <select id="college" class="form-control" formControlName="college" required>
+        <option *ngFor="let college of colleges" [value]="college.id">{{ college.name }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Gender</label><br>
+      <label><input type="radio" formControlName="gender" value="male"> Male</label>
+      <label><input type="radio" formControlName="gender" value="female"> Female</label>
+    </div>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="number" id="age" class="form-control" formControlName="age" required>
+    </div>
+    <div formArrayName="courses">
+      <div *ngFor="let course of courses.controls; let i = index" class="form-group" [formGroupName]="i">
+        <label>Course {{ i + 1 }}</label>
+        <input type="text" class="form-control" formControlName="title" placeholder="Title">
+        <select class="form-control" formControlName="year" placeholder="Year">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+          some
+      </div>
+    </div>
+    <button type="button" (click)="addCourse()" class="btn btn-primary">Add Course</button>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+  
