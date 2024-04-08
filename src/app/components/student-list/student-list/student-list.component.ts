@@ -113,7 +113,7 @@ export class StudentListComponent {
     this.paginateData();
   }
 
-  
+
   addStudent() {
     this.studentForm.reset();
     this.createForm();
@@ -290,15 +290,13 @@ export class StudentListComponent {
         console.log('Index ', index);
         studentDetails[index] = this.studentForm.value;
         this.students = studentDetails;
-        //this.saveToLocalStorage();
-        //this.initializeStudentData();
-        this.paginateData();
-        localStorage.setItem('StudentDetails', JSON.stringify(studentDetails));
+        this.saveToLocalStorage();
+        this.initializeStudentData();
         this.studentForm.reset();
         document.getElementById('closeModalButton').click();
       }
     } else {
-      alert('Please fill out the form correctly.');
+      alert('Please fill out All Details');
     }
   }
 

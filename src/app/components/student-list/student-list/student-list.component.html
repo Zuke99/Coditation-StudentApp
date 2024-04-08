@@ -164,11 +164,8 @@
                                 *ngIf="course.get('title').invalid && (course.get('title').dirty || course.get('title').touched)">
                                 <small class="text-danger">Name is required.</small>
                             </div>
-                            <select class="form-control" formControlName="year" placeholder="Year">
-                                <option *ngFor="let year of years" [value]="year">
-                                    {{ year }}
-                                </option>
-                            </select>
+                    
+                            <input type="number" id="year" class="form-control" formControlName="year" required />
                             <button type="button" (click)="removeCourse(i)" *ngIf="i !== 0">
                                 Delete
                             </button>
