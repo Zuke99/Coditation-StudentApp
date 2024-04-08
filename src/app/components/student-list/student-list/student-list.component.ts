@@ -40,6 +40,7 @@ export class StudentListComponent {
   searchForm: FormGroup;
   filteredStudents : any[] = [];
 
+  currentStudent : any;
   
   //totalPages: any;
 
@@ -111,6 +112,8 @@ export class StudentListComponent {
     }
     this.paginateData();
   }
+
+  
   addStudent() {
     this.studentForm.reset();
     this.createForm();
@@ -173,6 +176,10 @@ export class StudentListComponent {
     this.courses.push(this.createCourseFormGroup('Health', '2023'));
   }
 
+  refreshCourse(){
+    this.courses.clear();
+  }
+
   createCourseFormGroup(title, year) {
     return this.fb.group({
       title: title,
@@ -193,7 +200,8 @@ export class StudentListComponent {
       localStorage.setItem('StudentDetails', JSON.stringify(studentDetails));
       this.initializeStudentData();
       this.studentForm.reset();
-      console.log('Form submitted successfully!');
+      document.getElementById('closeModalButton').click();
+      alert('Form submitted successfully!');
     } else {
       alert('Please fill out the form correctly.');
     }
@@ -201,7 +209,8 @@ export class StudentListComponent {
 
   editStudent(student: any): void {
     // Implement edit logic here
-
+    this.studentForm.reset();
+    this.refreshCourse();
     this.studentForm.patchValue({
       studentName: student.studentName,
       college: student.college,
@@ -211,8 +220,9 @@ export class StudentListComponent {
       id: student.id,
       progress: student.progress,
     });
-
+    
     student.courses.forEach((course: any) => {
+     // if(course.title != 'Health')
       this.courses.push(this.createCourseFormGroup(course.title, course.year));
     });
 
@@ -252,6 +262,10 @@ export class StudentListComponent {
     console.log('Edit lcicke', studentData);
   }
 
+  closeModal(){
+      this.studentForm.reset();
+  }
+
   getExistingStudents(){
     let studentDetails: any[] = [];
       if (localStorage.getItem('StudentDetails')) {
@@ -275,8 +289,13 @@ export class StudentListComponent {
         console.log('Update ', this.studentForm.value);
         console.log('Index ', index);
         studentDetails[index] = this.studentForm.value;
+        this.students = studentDetails;
+        //this.saveToLocalStorage();
+        //this.initializeStudentData();
+        this.paginateData();
         localStorage.setItem('StudentDetails', JSON.stringify(studentDetails));
         this.studentForm.reset();
+        document.getElementById('closeModalButton').click();
       }
     } else {
       alert('Please fill out the form correctly.');
@@ -287,6 +306,30 @@ export class StudentListComponent {
     this.courses.removeAt(index);
   }
 
+  studentsSort(){
+    this.students.sort((a, b) => (parseInt(a.id) < parseInt(b.id) ? 1 : -1))
+  }
+  setCurrentStudent(student : any){
+    this.currentStudent = student;
+  }
+
+  changeProgressStatus(status : any){
+    let studentList = this.getExistingStudents();
+    const index = studentList.findIndex(
+      (student: any) => student.id === this.currentStudent.id
+    );
+    if (index !== -1) {
+      console.log("index",studentList[index]);
+      studentList[index].progress = status
+      this.students = studentList;
+    }
+    console.log("ProgressChange",this.students);
+    this.saveToLocalStorage();
+    this.initializeStudentData();
+    document.getElementById('progressModalButton').click();
+    
+  }
+
   paginateData(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -295,7 +338,10 @@ export class StudentListComponent {
     }
     else{
     this.paginatedData = this.students.slice(startIndex, endIndex);
+    // this.studentsSort();
+    // this.studentsSort();
     }
+    console.log("studentarr", this.students)
     console.log("paginateddata", this.paginatedData);
   }
 
@@ -324,11 +370,10 @@ export class StudentListComponent {
   }
 
   saveToLocalStorage(){
-     localStorage.removeItem('StudentData');
-     localStorage.setItem('StudentData',JSON.stringify(this.students));
-     console.log("AfterSaving", JSON.parse(localStorage.getItem('StudentData')));
-     //console.log(this.getExistingStudents());
-  
+     localStorage.removeItem('StudentDetails');
+     localStorage.setItem('StudentDetails',JSON.stringify(this.students));
+     console.log("AfterSaving", JSON.parse(localStorage.getItem('StudentDetails')));
+    
   }
 
   deleteSelected() {

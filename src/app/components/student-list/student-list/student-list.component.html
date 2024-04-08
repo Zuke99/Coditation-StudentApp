@@ -33,7 +33,9 @@
         <td>{{ student.college }}</td>
         <td>{{ student.gender }}</td>
         <td>{{ student.age }}</td>
-        <td>{{ student.progress }}</td>
+        <td><button type="button" (click)="setCurrentStudent(student)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#progressModal">
+            {{ student.progress }}
+        </button></td>
         <td>
           <button (click)="editStudent(student)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Edit</button>
           <button (click)="deleteStudent(student)" type="button" class="btn btn-danger"  >Delete</button>
@@ -66,9 +68,26 @@
   </nav>
 
 
+<div class="modal" tabindex="-1" id="progressModal" tabindex="-1" aria-labelledby="progressModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Progress Status</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-success" (click)="changeProgressStatus('Completed')">Completed</button>
+        <button type="button" class="btn btn-danger" (click)="changeProgressStatus('Rejected')">Rejected</button>
+        <button type="button" class="btn btn-warning" (click)="changeProgressStatus('Pending')">Pending</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="progressModalButton" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-
-<!-- Modal -->
+<!--Add/Edit Modal -->
 <div class="modal modal-dialog-scrollable" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -159,7 +178,7 @@
                         Add Course
                     </button>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" id="closeModalButton" (click)="closeModal()" data-bs-dismiss="modal">
                             Close
                         </button>
                         <button *ngIf="!isEditOperation" type="submit" class="btn btn-primary" >Submit</button>
