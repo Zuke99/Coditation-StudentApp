@@ -1,47 +1,52 @@
-import { Component, Input } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import CollegeData from '../../../../assets/json/colleges.json';
 import StudentData from '../../../../assets/json/students.json';
 import { Subject, debounceTime, map } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import {faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import {faTrash } from '@fortawesome/free-solid-svg-icons'
+import {faPlus } from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 @Component({
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
   styleUrl: './student-list.component.css',
 })
 export class StudentListComponent {
-  @Input() mode: 'add' | 'edit' = 'add';
-  @Input() studentData: any;
-  isOpen: boolean = false;
+  faCoffee = faCoffee;
+  faEdit = faPenToSquare
+  faDelete = faTrash
+  faAdd = faPlus
+  faSearch = faMagnifyingGlass
   studentForm: FormGroup;
-  colleges: any[] = [];
-  collegeList: any[] = [];
-  years = [2021, 2022, 2023];
+  colleges: any[] = []; //All Colleges
+  collegeList: any[] = []; //College BufferList
   bufferSize = 10;
-  dropDownIsLoading: boolean;
-  searchControl = new FormControl('');
+  isDropDownLoading: boolean;
   searchTerm$ = new Subject<string>();
-  studentDetails: any[] = [];
-  students: any[] = [];
-  isEditModalOpen: any;
+  students: any[] = []; //Main Student Data
+  isEditModalOpen: boolean;
   isEditOperation: boolean;
+  pageSize = 10;
+  currentPage = 1;
+  paginatedData: any[] = []; //to Show Paginated Chunks of Data
+  selectedItems: any[] = []; //to Delete Multiple Entries
+  isStudentSelected = true;
+  searchQuery: any; //For SearchBox
+  filteredStudents: any[] = []; //SearchBox Filtered Entries
+  currentStudent: any;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.createForm();
   }
 
   ngOnInit(): void {
     this.colleges = CollegeData;
     this.collegeList = this.colleges.slice(0, this.bufferSize);
-    
-    //this.students = JSON.parse(localStorage.getItem('StudentDetails'));
-    this.initializeStudentData(); 
+    this.initializeStudentData();
     this.isEditModalOpen = false;
 
     //college search
@@ -57,41 +62,58 @@ export class StudentListComponent {
       });
   }
 
+  //SearchBox
+  searchStudents(): void {
+    // If search query is empty, display all students
+    if (!this.searchQuery.trim()) {
+      this.students = this.students;
+    } else {
+      this.currentPage = 1
+      this.pageSize = 10
+      // Filter students based on search query
+      this.filteredStudents = this.students.filter((student) => {
+        return (
+          student.studentName
+            .toLowerCase()
+            .includes(this.searchQuery.toLowerCase()) ||
+          student.college.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+      });
+    }
+    this.initializeStudentData();
+  }
 
-  initializeStudentData(){
-    if(!localStorage.getItem('StudentDetails')){
-      localStorage.setItem('StudentDetails',JSON.stringify(StudentData));
+  initializeStudentData() {
+    if (!localStorage.getItem('StudentDetails')) {
+      localStorage.setItem('StudentDetails', JSON.stringify(StudentData));
       this.students = this.getExistingStudents();
     } else {
       let localStorageData = this.getExistingStudents();
-      localStorageData.sort((a, b) => (parseInt(a.id) < parseInt(b.id) ? 1 : -1))
-      this.students = localStorageData
+      localStorageData.sort((a, b) =>
+        parseInt(a.id) < parseInt(b.id) ? 1 : -1
+      );
+      this.students = localStorageData;
     }
-    // let initialStudents = StudentData;
-    // let localStorageData = this.getExistingStudents();
-    // initialStudents = [...initialStudents, ...localStorageData];
-    // localStorage.setItem('StudentDetails',JSON.stringify(initialStudents));
-    // initialStudents.sort((a, b) => (parseInt(a.id) < parseInt(b.id) ? 1 : -1));
-    // this.students = initialStudents;
-
-
+    this.paginateData();
   }
+
   addStudent() {
     this.studentForm.reset();
     this.createForm();
     this.isEditModalOpen = true;
     this.isEditOperation = false;
   }
+
   searchCollege(searchTerm: any) {
     let strval: string;
     strval = searchTerm.term.toString();
     if (strval.length === 0) {
-      console.log('zero');
       this.collegeList = this.colleges.slice(0, 10);
     } else if (strval.length > 2) {
       this.searchTerm$.next(strval);
     }
   }
+
   createForm() {
     this.studentForm = this.fb.group({
       studentName: [
@@ -100,7 +122,7 @@ export class StudentListComponent {
           validators: [Validators.required, Validators.minLength(3)],
           updateOn: 'blur',
         },
-      ], // Adding validators for studentName
+      ],
       college: ['', { validators: [Validators.required], updateOn: 'blur' }],
       gender: ['', { validators: [Validators.required], updateOn: 'blur' }],
       age: [
@@ -117,6 +139,7 @@ export class StudentListComponent {
       courses: this.fb.array([this.createCourse()]),
       progress: ['Pending'],
       id: [''],
+      avatar: [''],
     });
   }
 
@@ -138,7 +161,11 @@ export class StudentListComponent {
     this.courses.push(this.createCourseFormGroup('Health', '2023'));
   }
 
-  createCourseFormGroup(title, year) {
+  refreshCourse() {
+    this.courses.clear();
+  }
+
+  createCourseFormGroup(title: any, year: any) {
     return this.fb.group({
       title: title,
       year: year,
@@ -148,25 +175,29 @@ export class StudentListComponent {
   submit(): void {
     if (this.studentForm.valid) {
       let studentDetails = this.getExistingStudents();
-      const uniqueId = Date.now().toString() + Math.floor(Math.random() * 1000).toString();
+      const uniqueId =
+        Date.now().toString() + Math.floor(Math.random() * 1000).toString();
       const studentFormDataWithId = {
         ...this.studentForm.value,
         id: uniqueId,
         progress: 'Pending',
       };
       studentDetails.push(studentFormDataWithId);
-      localStorage.setItem('StudentDetails', JSON.stringify(studentDetails));
+      this.students = studentDetails;
+      this.saveToLocalStorage();
       this.initializeStudentData();
       this.studentForm.reset();
-      console.log('Form submitted successfully!');
+      document.getElementById('closeModalButton').click();
+      alert('Form submitted successfully!');
     } else {
       alert('Please fill out the form correctly.');
     }
   }
 
   editStudent(student: any): void {
-    // Implement edit logic here
-
+   
+    this.studentForm.reset();
+    this.refreshCourse();
     this.studentForm.patchValue({
       studentName: student.studentName,
       college: student.college,
@@ -184,71 +215,135 @@ export class StudentListComponent {
     this.isEditOperation = true;
   }
 
-  deleteStudent(student: any): void {
-    // Implement delete logic here
+  deleteStudent(student: any, confirmDelete?: boolean): void {
+    if(confirmDelete || confirm(`Are you Sure You want to delete Student ${student.studentName}?`) ){
     this.isEditModalOpen = true;
     let existingStudents = this.getExistingStudents();
     const index = existingStudents.findIndex(
       (currStudent: any) => currStudent.id === student.id
     );
-    if(index !== -1){
+    if (index !== -1) {
       existingStudents.splice(index, 1);
       localStorage.setItem('StudentDetails', JSON.stringify(existingStudents));
       this.students = existingStudents;
       this.initializeStudentData();
     }
   }
+  }
 
+  //load More Data on Scrolling to end
   onScrollToEnd() {
-    console.log('scrolled till end');
     const len = this.collegeList.length;
     const more = this.colleges.slice(len, this.bufferSize + len);
-    this.dropDownIsLoading = true;
+    this.isDropDownLoading = true;
 
     setTimeout(() => {
-      this.dropDownIsLoading = false;
+      this.isDropDownLoading = false;
       this.collegeList = this.collegeList.concat(more);
     }, 200);
   }
 
-  openModalWithData(studentData: any): void {
-    this.isOpen = true;
-    //this.studentData = studentData;
-    console.log('Edit lcicke', studentData);
+  closeModal() {
+    this.studentForm.reset();
   }
 
-  getExistingStudents(){
+  getExistingStudents() {
     let studentDetails: any[] = [];
-      if (localStorage.getItem('StudentDetails')) {
-        studentDetails = JSON.parse(localStorage.getItem('StudentDetails')!);
-      }
-      return studentDetails;
+    if (localStorage.getItem('StudentDetails')) {
+      studentDetails = JSON.parse(localStorage.getItem('StudentDetails')!);
+    }
+    return studentDetails;
   }
 
   updateStudentDetails() {
     console.log('inside', this.studentForm.value);
     if (this.studentForm.valid) {
       let studentDetails: any[] = [];
-      if (localStorage.getItem('StudentDetails')) {
-        studentDetails = JSON.parse(localStorage.getItem('StudentDetails')!);
+      if (this.getExistingStudents()) {
+        studentDetails = this.getExistingStudents();
       }
       const index = studentDetails.findIndex(
         (student: any) => student.id === this.studentForm.value.id
       );
 
       if (index !== -1) {
-        console.log('Update ', this.studentForm.value);
-        console.log('Index ', index);
         studentDetails[index] = this.studentForm.value;
-        localStorage.setItem('StudentDetails', JSON.stringify(studentDetails));
+        this.students = studentDetails;
+        this.saveToLocalStorage();
+        this.initializeStudentData();
         this.studentForm.reset();
+        document.getElementById('closeModalButton').click();
       }
     } else {
-      alert('Please fill out the form correctly.');
+      alert('Please fill out All Details');
     }
   }
 
   removeCourse(index: number): void {
     this.courses.removeAt(index);
   }
+  //While Changing Pending Status
+  setCurrentStudent(student: any) {
+    this.currentStudent = student;
+  }
+
+  changeProgressStatus(status: any) {
+    let studentList = this.getExistingStudents();
+    const index = studentList.findIndex(
+      (student: any) => student.id === this.currentStudent.id
+    );
+    if (index !== -1) {
+      studentList[index].progress = status;
+      this.students = studentList;
+    }
+    this.saveToLocalStorage();
+    this.initializeStudentData();
+    document.getElementById('progressModalButton').click();
+  }
+
+  paginateData(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    if (this.filteredStudents.length > 0) {
+      this.paginatedData = this.filteredStudents.slice(startIndex, endIndex);
+    } else {
+      this.paginatedData = this.students.slice(startIndex, endIndex);
+    }
+  }
+
+  get totalPages(): number[] {
+    const totalItems = this.students.length;
+    const totalPages = Math.ceil(totalItems / this.pageSize);
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.paginateData();
+  }
+
+  toggleSelection(event: any, student: any): void {
+    if (event.target.checked) {
+      this.selectedItems.push(student);
+    } else {
+      const index = this.selectedItems.findIndex((item) => item === student);
+      if (index !== -1) {
+        this.selectedItems.splice(index, 1);
+      }
+    }
+    if (this.selectedItems.length > 0) this.isStudentSelected = false;
+    else this.isStudentSelected = true;
+  }
+
+  saveToLocalStorage() {
+    localStorage.setItem('StudentDetails', JSON.stringify(this.students));
+  }
+
+  deleteSelected() {
+    if(confirm(`Are you Sure You Want to delete these ${this.selectedItems.length} items`)){
+    for (let i = 0; i < this.selectedItems.length; i++)
+      this.deleteStudent(this.selectedItems[i], true);
+    this.selectedItems = [];
+  }
+}
 }

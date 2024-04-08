@@ -1,39 +1,129 @@
-<!-- Button trigger modal -->
-<button (click)="addStudent()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Add Student
-</button>
+<div class="heading-div">
+    <h2 class="heading">Students</h2>
+</div>
+
+<div class="header-div">
+
+    <div class="search-bar-div">
+        <!-- Search Box -->
+        <input type="text" class="form-control searchbar" [(ngModel)]="searchQuery"
+            placeholder="Search by Name or College" (input)="searchStudents()"><fa-icon class="search-icon"
+            [icon]="faSearch"></fa-icon>
+    </div>
 
 
+    <div class="header-buttons-div">
 
-<table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>College</th>
-        <th>Gender</th>
-        <th>Age</th>
-        <th>Progress</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let student of students">
-        <td>{{ student.studentName }}</td>
-        <td>{{ student.college }}</td>
-        <td>{{ student.gender }}</td>
-        <td>{{ student.age }}</td>
-        <td>{{ student.progress }}</td>
-        <td>
-          <button (click)="editStudent(student)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Edit</button>
-          <button (click)="deleteStudent(student)" type="button" class="btn btn-danger"  >Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        <!-- Multi Delete Option -->
+        <button class="btn btn-danger" *ngIf="selectedItems.length > 0" (click)="deleteSelected()"><fa-icon
+                [icon]="faDelete"></fa-icon> {{selectedItems.length}} items</button>
 
-<!-- Modal -->
-<div class="modal modal-dialog-scrollable" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel"
+        <!-- Add Student -->
+        <button (click)="addStudent()" type="button" class="btn btn-primary add-button" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+            <fa-icon [icon]="faAdd"></fa-icon> Add Student
+        </button>
+
+    </div>
+
+
+</div>
+
+<!-- Students List -->
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Name</th>
+                <th>College</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Progress</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let student of paginatedData">
+                <td>
+                    <input type="checkbox" class="checkbox-select" [value]="student"
+                        (change)="toggleSelection($event, student)" />
+                </td>
+                <td>{{ student.studentName }}</td>
+                <td>{{ student.college }}</td>
+                <td>{{ student.gender }}</td>
+                <td>{{ student.age }}</td>
+                <td><button type="button" (click)="setCurrentStudent(student)" data-bs-toggle="modal"
+                        data-bs-target="#progressModal" class="status-button" [ngClass]="{
+                    'pending': student.progress === 'Pending',
+                    'completed': student.progress === 'Completed',
+                    'rejected': student.progress === 'Rejected'
+            }">
+                        {{ student.progress }}
+                    </button></td>
+                <td>
+                    <button (click)="editStudent(student)" type="button" class="btn btn-primary edit-button"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal"><fa-icon
+                            [icon]="faEdit"></fa-icon></button>
+                    <button (click)="deleteStudent(student)" type="button" class="btn btn-danger delete-button"><fa-icon
+                            [icon]="faDelete"></fa-icon></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Bootstrap pagination -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <!-- Previous page button -->
+        <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="onPageChange(currentPage - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </button>
+        </li>
+        <!-- Page numbers -->
+        <li class="page-item" *ngFor="let page of totalPages">
+            <button class="page-link" (click)="onPageChange(page)">{{ page }}</button>
+        </li>
+        <!-- Next page button -->
+        <li class="page-item" [class.disabled]="currentPage === totalPages.length">
+            <button class="page-link" (click)="onPageChange(currentPage + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<!-- Progress Status Change Pop-Up -->
+<div class="modal" tabindex="-1" id="progressModal" tabindex="-1" aria-labelledby="progressModalLabel"
     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change Progress Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn btn-success status-buttons"
+                    (click)="changeProgressStatus('Completed')">Completed</button>
+                <button type="button" class="btn btn-danger status-buttons"
+                    (click)="changeProgressStatus('Rejected')">Rejected</button>
+                <button type="button" class="btn btn-warning status-buttons" 
+                    (click)="changeProgressStatus('Pending')">Pending</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="progressModalButton"
+                    data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add/Edit PopUp Form-->
+<div class="modal modal-dialog-scrollable add-popup-div" tabindex="-1" id="exampleModal"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -42,10 +132,12 @@
             </div>
             <div class="modal-body">
                 <form (ngSubmit)="submit()" [formGroup]="studentForm">
+
+                    <!-- Name -->
                     <div class="form-group">
-                        <label for="studentName">Student Name</label>
+                        <label>Name</label>
                         <input type="text" id="studentName" class="form-control" formControlName="studentName"
-                            required />
+                            placeholder="Student Name" required />
                         <div
                             *ngIf="studentForm.get('studentName')?.errors?.['required'] && (studentForm.get('studentName').dirty || studentForm.get('studentName').touched)">
                             <small class="text-danger">Name is required.</small>
@@ -56,11 +148,13 @@
                             <small class="text-danger">Name must contain at least 3 characters.</small>
                         </div>
                     </div>
+
+                    <!-- Select College -->
                     <div class="form-group">
-                        <label for="college">Colleges</label>
+                        <label for="college">Select a College</label>
                         <ng-select class="form-group" formControlName="college" [items]="collegeList"
-                            [virtualScroll]="true" [loading]="dropDownIsLoading" bindLabel="name" bindValue="name"
-                            (search)="searchCollege($event)" placeholder="Select photo" style="font-family: roboto"
+                            [virtualScroll]="true" [loading]="isDropDownLoading" bindLabel="name" bindValue="name"
+                            (search)="searchCollege($event)" placeholder="Choose Colleges" style="font-family: roboto"
                             (scrollToEnd)="onScrollToEnd()">
                             <ng-template ng-header-tmp>
                                 <small class="form-text text-muted">Loaded {{ collegeList.length }} of
@@ -75,11 +169,13 @@
                             <small class="text-danger">College is required.</small>
                         </div>
                     </div>
-                    <div class="form-group">
+
+                    <!-- Select Gender -->
+                    <div class="form-group ">
                         <label>Gender</label><br />
-                        <label><input type="radio" formControlName="gender" value="Male" />
+                        <label class="radio-button"><input type="radio" formControlName="gender" value="Male" />
                             Male</label>
-                        <label><input type="radio" formControlName="gender" value="Female" />
+                        <label class="radio-button"><input type="radio" formControlName="gender" value="Female" />
                             Female</label>
                     </div>
                     <div
@@ -87,9 +183,11 @@
                         <small class="text-danger">Gender is required.</small>
                     </div>
 
+                    <!-- Select Age -->
                     <div class="form-group">
                         <label for="age">Age</label>
-                        <input type="number" id="age" class="form-control" formControlName="age" required />
+                        <input type="number" id="age" class="form-control" formControlName="age" placeholder="Enter Age"
+                            required />
                     </div>
                     <div
                         *ngIf="studentForm.get('age')?.errors?.['required'] && (studentForm.get('age').dirty || studentForm.get('age').touched)">
@@ -99,34 +197,45 @@
                         *ngIf="(studentForm.get('age')?.errors?.['min'] || studentForm.get('age')?.errors?.['max'])  && (studentForm.get('age').dirty || studentForm.get('age').touched)">
                         <small class="text-danger">Age Should be above 18 and Below 45.</small>
                     </div>
-                    <div formArrayName="courses">
-                        <div *ngFor="let course of courses.controls; let i = index" class="form-group"
-                            [formGroupName]="i">
-                            <label>Course {{ i + 1 }}</label>
-                            <input type="text" class="form-control" formControlName="title" placeholder="Title" />
-                            <div
-                                *ngIf="course.get('title').invalid && (course.get('title').dirty || course.get('title').touched)">
-                                <small class="text-danger">Name is required.</small>
+                    <hr />
+                    <!-- Select Courses -->
+
+                    <div class="courses-container">
+                        <div formArrayName="courses">
+                            <div *ngFor="let course of courses.controls; let i = index" class="form-group"
+                                [formGroupName]="i">
+                                <label><strong>Course {{ i + 1 }}</strong></label><br />
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control course-input" formControlName="title"
+                                    placeholder="Title" />
+                                <div
+                                    *ngIf="course.get('title').invalid && (course.get('title').dirty || course.get('title').touched)">
+                                    <small class="text-danger">Name is required.</small>
+                                </div>
+                                <label for="year">Year Of Completion</label>
+                                <input type="number" id="year" class="form-control course-input" formControlName="year"
+                                    required />
+                                <button type="button" class="delete-course-btn" (click)="removeCourse(i)"
+                                    *ngIf="i !== 0">
+                                    <fa-icon [icon]="faDelete"></fa-icon>
+                                </button>
+                                <hr />
                             </div>
-                            <select class="form-control" formControlName="year" placeholder="Year">
-                                <option *ngFor="let year of years" [value]="year">
-                                    {{ year }}
-                                </option>
-                            </select>
-                            <button type="button" (click)="removeCourse(i)" *ngIf="i !== 0">
-                                Delete
-                            </button>
+
                         </div>
-                    </div>
-                    <button type="button" (click)="addCourse()" class="btn btn-primary">
-                        Add Course
-                    </button>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Close
+                        <button type="button" (click)="addCourse()" class=" add-course-btn">
+                            Add Course <fa-icon [icon]="faAdd"></fa-icon>
                         </button>
-                        <button *ngIf="!isEditOperation" type="submit" class="btn btn-primary" >Submit</button>
-                        <button *ngIf="isEditOperation" type="button" class="btn btn-success" (click)="updateStudentDetails()">Update</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="closeModalButton" (click)="closeModal()"
+                                data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button *ngIf="!isEditOperation" type="submit" class="btn btn-primary">Submit</button>
+                            <button *ngIf="isEditOperation" type="button" class="btn btn-success"
+                                (click)="updateStudentDetails()">Update</button>
+                        </div>
+
                     </div>
                 </form>
             </div>

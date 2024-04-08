@@ -1,303 +1,602 @@
 [
-    {
-      "id": "1",
-      "studentName": "John Doe",
-      "college": "ABC University",
-      "gender": "Male",
-      "age": 22,
-      "courses": [
-        {"title": "Mathematics", "year": 2022},
-        {"title": "Physics", "year": 2023}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "2",
-      "studentName": "Jane Smith",
-      "college": "XYZ College",
-      "gender": "Female",
-      "age": 20,
-      "courses": [
-        {"title": "Computer Science", "year": 2023},
-        {"title": "Biology", "year": 2022}
-      ],
-      "progress": "Pending"
-    },
-    {
-      "id": "3",
-      "studentName": "Michael Johnson",
-      "college": "LMN Institute",
-      "gender": "Male",
-      "age": 25,
-      "courses": [
-        {"title": "Chemistry", "year": 2024},
-        {"title": "English Literature", "year": 2025}
-      ],
-      "progress": "Rejected"
-    },
-    {
-      "id": "4",
-      "studentName": "Emily Williams",
-      "college": "PQR College",
-      "gender": "Female",
-      "age": 23,
-      "courses": [
-        {"title": "History", "year": 2023},
-        {"title": "Geography", "year": 2024}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "5",
-      "studentName": "David Brown",
-      "college": "UVW University",
-      "gender": "Male",
-      "age": 21,
-      "courses": [
-        {"title": "Economics", "year": 2024},
-        {"title": "Psychology", "year": 2023}
-      ],
-      "progress": "Pending"
-    },
-    {
-      "id": "6",
-      "studentName": "Emma Wilson",
-      "college": "DEF College",
-      "gender": "Female",
-      "age": 24,
-      "courses": [
-        {"title": "Sociology", "year": 2023},
-        {"title": "Political Science", "year": 2022}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "7",
-      "studentName": "Daniel Taylor",
-      "college": "GHI University",
-      "gender": "Male",
-      "age": 26,
-      "courses": [
-        {"title": "Business Administration", "year": 2022},
-        {"title": "Marketing", "year": 2023}
-      ],
-      "progress": "Rejected"
-    },
-    {
-      "id": "8",
-      "studentName": "Olivia Martinez",
-      "college": "JKL Institute",
-      "gender": "Female",
-      "age": 19,
-      "courses": [
-        {"title": "Computer Engineering", "year": 2025},
-        {"title": "Electrical Engineering", "year": 2024}
-      ],
-      "progress": "Pending"
-    },
-    {
-      "id": "9",
-      "studentName": "Ethan Garcia",
-      "college": "RST College",
-      "gender": "Male",
-      "age": 27,
-      "courses": [
-        {"title": "Mechanical Engineering", "year": 2023},
-        {"title": "Civil Engineering", "year": 2022}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "10",
-      "studentName": "Ava Anderson",
-      "college": "MNO University",
-      "gender": "Female",
-      "age": 28,
-      "courses": [
-        {"title": "Environmental Science", "year": 2022},
-        {"title": "Oceanography", "year": 2023}
-      ],
-      "progress": "Rejected"
-    },
-    {
-      "id": "11",
-      "studentName": "Liam Thomas",
-      "college": "PQR College",
-      "gender": "Male",
-      "age": 30,
-      "courses": [
-        {"title": "Information Technology", "year": 2024},
-        {"title": "Data Science", "year": 2025}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "12",
-      "studentName": "Sophia Hernandez",
-      "college": "ABC University",
-      "gender": "Female",
-      "age": 29,
-      "courses": [
-        {"title": "Finance", "year": 2025},
-        {"title": "Accounting", "year": 2024}
-      ],
-      "progress": "Pending"
-    },
-    {
-      "id": "13",
-      "studentName": "Noah Nelson",
-      "college": "DEF College",
-      "gender": "Male",
-      "age": 32,
-      "courses": [
-        {"title": "English", "year": 2022},
-        {"title": "Creative Writing", "year": 2023}
-      ],
-      "progress": "Rejected"
-    },
-    {
-      "id": "14",
-      "studentName": "Isabella Walker",
-      "college": "UVW University",
-      "gender": "Female",
-      "age": 31,
-      "courses": [
-        {"title": "Art History", "year": 2023},
-        {"title": "Archeology", "year": 2024}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "15",
-      "studentName": "Mason Perez",
-      "college": "GHI University",
-      "gender": "Male",
-      "age": 35,
-      "courses": [
-        {"title": "Nutrition", "year": 2024},
-        {"title": "Physical Education", "year": 2025}
-      ],
-      "progress": "Pending"
-    },
-    {
-      "id": "16",
-      "studentName": "Charlotte Ramirez",
-      "college": "JKL Institute",
-      "gender": "Female",
-      "age": 36,
-      "courses": [
-        {"title": "Forensic Science", "year": 2022},
-        {"title": "Criminal Justice", "year": 2023}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "17",
-      "studentName": "William Evans",
-      "college": "MNO University",
-      "gender": "Male",
-      "age": 33,
-      "courses": [
-        {"title": "Philosophy", "year": 2025},
-        {"title": "Religious Studies", "year": 2024}
-      ],
-      "progress": "Rejected"
-    },
-    {
-      "id": "18",
-      "studentName": "Avery Martinez",
-      "college": "RST College",
-      "gender": "Female",
-      "age": 34,
-      "courses": [
-        {"title": "Astrophysics", "year": 2024},
-        {"title": "Astronomy", "year": 2025}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "19",
-      "studentName": "James Hill",
-      "college": "PQR College",
-      "gender": "Male",
-      "age": 37,
-      "courses": [
-        {"title": "Chemical Engineering", "year": 2022},
-        {"title": "Biomedical Engineering", "year": 2023}
-      ],
-      "progress": "Pending"
-    },
-    {
-      "id": "20",
-      "studentName": "Evelyn Young",
-      "college": "ABC University",
-      "gender": "Female",
-      "age": 38,
-      "courses": [
-        {"title": "Music", "year": 2023},
-        {"title": "Dance", "year": 2024}
-      ],
-      "progress": "Rejected"
-    },
-    {
-      "id": "21",
-      "studentName": "Benjamin King",
-      "college": "DEF College",
-      "gender": "Male",
-      "age": 39,
-      "courses": [
-        {"title": "Drama", "year": 2024},
-        {"title": "Theater Arts", "year": 2025}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "22",
-      "studentName": "Abigail Hernandez",
-      "college": "UVW University",
-      "gender": "Female",
-      "age": 40,
-      "courses": [
-        {"title": "Anthropology", "year": 2022},
-        {"title": "Sociology", "year": 2023}
-      ],
-      "progress": "Pending"
-    },
-    {
-      "id": "23",
-      "studentName": "Daniel Diaz",
-      "college": "GHI University",
-      "gender": "Male",
-      "age": 19,
-      "courses": [
-        {"title": "Geology", "year": 2025},
-        {"title": "Meteorology", "year": 2024}
-      ],
-      "progress": "Rejected"
-    },
-    {
-      "id": "24",
-      "studentName": "Chloe Thompson",
-      "college": "JKL Institute",
-      "gender": "Female",
-      "age": 20,
-      "courses": [
-        {"title": "Botany", "year": 2024},
-        {"title": "Zoology", "year": 2025}
-      ],
-      "progress": "Completed"
-    },
-    {
-      "id": "25",
-      "studentName": "Samuel Scott",
-      "college": "MNO University",
-      "gender": "Male",
-      "age": 21,
-      "courses": [
-        {"title": "Archaeology", "year": 2023},
-        {"title": "Paleontology", "year": 2024}
-      ],
-      "progress": "Pending"
-    }
-  ]
-  
+  {
+    "id": "1",
+    "studentName": "Alice Johnson",
+    "college": "University of Michigan",
+    "gender": "Female",
+    "age": 21,
+    "courses": [
+      {"title": "Computer Science", "year": 2022},
+      {"title": "Mathematics", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "2",
+    "studentName": "Bob Smith",
+    "college": "University of Washington",
+    "gender": "Male",
+    "age": 24,
+    "courses": [
+      {"title": "Physics", "year": 2023},
+      {"title": "Chemistry", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "3",
+    "studentName": "Emma Williams",
+    "college": "University of California, Berkeley (UCB)",
+    "gender": "Female",
+    "age": 22,
+    "courses": [
+      {"title": "Biology", "year": 2022},
+      {"title": "Economics", "year": 2023}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "4",
+    "studentName": "David Brown",
+    "college": "Massachusetts Institute of Technology (MIT)",
+    "gender": "Male",
+    "age": 23,
+    "courses": [
+      {"title": "History", "year": 2022},
+      {"title": "Literature", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "5",
+    "studentName": "Olivia Davis",
+    "college": "University of Illinois at Urbana-Champaign",
+    "gender": "Female",
+    "age": 20,
+    "courses": [
+      {"title": "Psychology", "year": 2023},
+      {"title": "Sociology", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "6",
+    "studentName": "James Wilson",
+    "college": "University of Pennsylvania",
+    "gender": "Male",
+    "age": 25,
+    "courses": [
+      {"title": "Engineering", "year": 2022},
+      {"title": "Political Science", "year": 2023}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "7",
+    "studentName": "Sophia Taylor",
+    "college": "University of California, San Diego (UCSD)",
+    "gender": "Female",
+    "age": 19,
+    "courses": [
+      {"title": "Art", "year": 2022},
+      {"title": "Music", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "8",
+    "studentName": "Michael Martinez",
+    "college": "University of Cambridge",
+    "gender": "Male",
+    "age": 22,
+    "courses": [
+      {"title": "Philosophy", "year": 2023},
+      {"title": "Foreign Languages", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "9",
+    "studentName": "Emily Anderson",
+    "college": "Stanford University",
+    "gender": "Female",
+    "age": 24,
+    "courses": [
+      {"title": "Medicine", "year": 2022},
+      {"title": "Law", "year": 2023}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "10",
+    "studentName": "William Thomas",
+    "college": "Harvard University",
+    "gender": "Male",
+    "age": 21,
+    "courses": [
+      {"title": "Geology", "year": 2023},
+      {"title": "Architecture", "year": 2024}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "11",
+    "studentName": "Isabella Jackson",
+    "college": "University of Oxford",
+    "gender": "Female",
+    "age": 23,
+    "courses": [
+      {"title": "Business Administration", "year": 2022},
+      {"title": "Finance", "year": 2023}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "12",
+    "studentName": "Ethan White",
+    "college": "ETH Zurich - Swiss Federal Institute of Technology",
+    "gender": "Male",
+    "age": 22,
+    "courses": [
+      {"title": "Computer Engineering", "year": 2023},
+      {"title": "Environmental Science", "year": 2024}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "13",
+    "studentName": "Ava Harris",
+    "college": "Princeton University",
+    "gender": "Female",
+    "age": 20,
+    "courses": [
+      {"title": "Astrophysics", "year": 2023},
+      {"title": "Statistics", "year": 2024}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "14",
+    "studentName": "Noah Martin",
+    "college": "Yale University",
+    "gender": "Male",
+    "age": 25,
+    "courses": [
+      {"title": "Journalism", "year": 2022},
+      {"title": "Public Relations", "year": 2023}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "15",
+    "studentName": "Mia Thompson",
+    "college": "Columbia University",
+    "gender": "Female",
+    "age": 22,
+    "courses": [
+      {"title": "Education", "year": 2022},
+      {"title": "Health Sciences", "year": 2023}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "16",
+    "studentName": "Liam Garcia",
+    "college": "University of Chicago",
+    "gender": "Male",
+    "age": 23,
+    "courses": [
+      {"title": "Biomedical Engineering", "year": 2023},
+      {"title": "Neuroscience", "year": 2024}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "17",
+    "studentName": "Charlotte Martinez",
+    "college": "University of California, Los Angeles (UCLA)",
+    "gender": "Female",
+    "age": 24,
+    "courses": [
+      {"title": "Drama", "year": 2023},
+      {"title": "Film Studies", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "18",
+    "studentName": "Alexander Rodriguez",
+    "college": "University of Washington",
+    "gender": "Male",
+    "age": 21,
+    "courses": [
+      {"title": "Dance", "year": 2022},
+      {"title": "Music Production", "year": 2023}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "19",
+    "studentName": "Amelia Hernandez",
+    "college": "University of California, Berkeley (UCB)",
+    "gender": "Female",
+    "age": 20,
+    "courses": [
+      {"title": "Fashion Design", "year": 2022},
+      {"title": "Graphic Design", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "20",
+    "studentName": "Daniel Nguyen",
+    "college": "Massachusetts Institute of Technology (MIT)",
+    "gender": "Male",
+    "age": 22,
+    "courses": [
+      {"title": "Industrial Design", "year": 2023},
+      {"title": "Product Management", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "21",
+    "studentName": "Abigail Perez",
+    "college": "University of Illinois at Urbana-Champaign",
+    "gender": "Female",
+    "age": 24,
+    "courses": [
+      {"title": "Web Development", "year": 2023},
+      {"title": "Mobile App Development", "year": 2024}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "22",
+    "studentName": "Matthew Reyes",
+    "college": "University of Pennsylvania",
+    "gender": "Male",
+    "age": 23,
+    "courses": [
+      {"title": "Data Science", "year": 2022},
+      {"title": "Artificial Intelligence", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "23",
+    "studentName": "Ella Cruz",
+    "college": "University of California, San Diego (UCSD)",
+    "gender": "Female",
+    "age": 21,
+    "courses": [
+      {"title": "Blockchain Technology", "year": 2022},
+      {"title": "Cybersecurity", "year": 2023}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "24",
+    "studentName": "Henry Scott",
+    "college": "University of Cambridge",
+    "gender": "Male",
+    "age": 25,
+    "courses": [
+      {"title": "Cloud Computing", "year": 2023},
+      {"title": "Internet of Things (IoT)", "year": 2024}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "25",
+    "studentName": "Addison Lewis",
+    "college": "Stanford University",
+    "gender": "Female",
+    "age": 22,
+    "courses": [
+      {"title": "Quantum Computing", "year": 2023},
+      {"title": "Robotics", "year": 2024}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "26",
+    "studentName": "Sebastian Lee",
+    "college": "Harvard University",
+    "gender": "Male",
+    "age": 23,
+    "courses": [
+      {"title": "Augmented Reality (AR)", "year": 2022},
+      {"title": "Virtual Reality (VR)", "year": 2023}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "27",
+    "studentName": "Evelyn Walker",
+    "college": "University of Oxford",
+    "gender": "Female",
+    "age": 20,
+    "courses": [
+      {"title": "Bioinformatics", "year": 2023},
+      {"title": "Genetic Engineering", "year": 2024}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "28",
+    "studentName": "Gabriel Hill",
+    "college": "ETH Zurich - Swiss Federal Institute of Technology",
+    "gender": "Male",
+    "age": 21,
+    "courses": [
+      {"title": "Nanotechnology", "year": 2022},
+      {"title": "Biomechanics", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "29",
+    "studentName": "Chloe Green",
+    "college": "University of California, Berkeley (UCB)",
+    "gender": "Female",
+    "age": 24,
+    "courses": [
+      {"title": "Renewable Energy", "year": 2023},
+      {"title": "Sustainable Development", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "30",
+    "studentName": "Jackson Adams",
+    "college": "Massachusetts Institute of Technology (MIT)",
+    "gender": "Male",
+    "age": 22,
+    "courses": [
+      {"title": "Urban Planning", "year": 2023},
+      {"title": "Civil Engineering", "year": 2024}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "31",
+    "studentName": "Avery Flores",
+    "college": "University of Illinois at Urbana-Champaign",
+    "gender": "Female",
+    "age": 23,
+    "courses": [
+      {"title": "Aerospace Engineering", "year": 2022},
+      {"title": "Marine Biology", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "32",
+    "studentName": "Madison Rivera",
+    "college": "University of Pennsylvania",
+    "gender": "Male",
+    "age": 20,
+    "courses": [
+      {"title": "Geography", "year": 2023},
+      {"title": "Geomatics", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "33",
+    "studentName": "Luke Ward",
+    "college": "University of California, San Diego (UCSD)",
+    "gender": "Female",
+    "age": 25,
+    "courses": [
+      {"title": "Meteorology", "year": 2022},
+      {"title": "Oceanography", "year": 2023}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "34",
+    "studentName": "Grace Rogers",
+    "college": "University of Cambridge",
+    "gender": "Male",
+    "age": 22,
+    "courses": [
+      {"title": "Zoology", "year": 2023},
+      {"title": "Botany", "year": 2024}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "35",
+    "studentName": "Owen Flores",
+    "college": "Stanford University",
+    "gender": "Female",
+    "age": 19,
+    "courses": [
+      {"title": "Entomology", "year": 2023},
+      {"title": "Ecology", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "36",
+    "studentName": "Lily Richardson",
+    "college": "Harvard University",
+    "gender": "Male",
+    "age": 21,
+    "courses": [
+      {"title": "Herpetology", "year": 2022},
+      {"title": "Ornithology", "year": 2023}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "37",
+    "studentName": "Christopher Wood",
+    "college": "University of Oxford",
+    "gender": "Female",
+    "age": 24,
+    "courses": [
+      {"title": "Ichthyology", "year": 2023},
+      {"title": "Mycology", "year": 2024}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "38",
+    "studentName": "Zoey Cooper",
+    "college": "ETH Zurich - Swiss Federal Institute of Technology",
+    "gender": "Male",
+    "age": 23,
+    "courses": [
+      {"title": "Limnology", "year": 2022},
+      {"title": "Parasitology", "year": 2023}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "39",
+    "studentName": "Nathan Carter",
+    "college": "University of California, Berkeley (UCB)",
+    "gender": "Female",
+    "age": 22,
+    "courses": [
+      {"title": "Paleontology", "year": 2023},
+      {"title": "Taxonomy", "year": 2024}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "40",
+    "studentName": "Hailey Hayes",
+    "college": "Massachusetts Institute of Technology (MIT)",
+    "gender": "Male",
+    "age": 20,
+    "courses": [
+      {"title": "Biochemistry", "year": 2022},
+      {"title": "Immunology", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "41",
+    "studentName": "Isaac Long",
+    "college": "University of Illinois at Urbana-Champaign",
+    "gender": "Female",
+    "age": 21,
+    "courses": [
+      {"title": "Microbiology", "year": 2023},
+      {"title": "Virology", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "42",
+    "studentName": "Scarlett Cooper",
+    "college": "University of Pennsylvania",
+    "gender": "Male",
+    "age": 24,
+    "courses": [
+      {"title": "Cell Biology", "year": 2023},
+      {"title": "Genetics", "year": 2024}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "43",
+    "studentName": "Henry Brooks",
+    "college": "University of California, San Diego (UCSD)",
+    "gender": "Female",
+    "age": 25,
+    "courses": [
+      {"title": "Ecology", "year": 2022},
+      {"title": "Environmental Science", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "44",
+    "studentName": "Addison Russell",
+    "college": "University of Cambridge",
+    "gender": "Male",
+    "age": 23,
+    "courses": [
+      {"title": "Geology", "year": 2023},
+      {"title": "Meteorology", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "45",
+    "studentName": "Eleanor Patterson",
+    "college": "Stanford University",
+    "gender": "Female",
+    "age": 22,
+    "courses": [
+      {"title": "Oceanography", "year": 2023},
+      {"title": "Marine Biology", "year": 2024}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "46",
+    "studentName": "Levi Carter",
+    "college": "Harvard University",
+    "gender": "Male",
+    "age": 21,
+    "courses": [
+      {"title": "Zoology", "year": 2022},
+      {"title": "Botany", "year": 2023}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "47",
+    "studentName": "Nora Wood",
+    "college": "University of Oxford",
+    "gender": "Female",
+    "age": 20,
+    "courses": [
+      {"title": "Ichthyology", "year": 2023},
+      {"title": "Mycology", "year": 2024}
+    ],
+    "progress": "Pending"
+  },
+  {
+    "id": "48",
+    "studentName": "Lincoln Powell",
+    "college": "ETH Zurich - Swiss Federal Institute of Technology",
+    "gender": "Male",
+    "age": 19,
+    "courses": [
+      {"title": "Limnology", "year": 2022},
+      {"title": "Parasitology", "year": 2023}
+    ],
+    "progress": "Rejected"
+  },
+  {
+    "id": "49",
+    "studentName": "Eliana Bryant",
+    "college": "University of California, Berkeley (UCB)",
+    "gender": "Female",
+    "age": 22,
+    "courses": [
+      {"title": "Paleontology", "year": 2023},
+      {"title": "Taxonomy", "year": 2024}
+    ],
+    "progress": "Completed"
+  },
+  {
+    "id": "50",
+    "studentName": "Hudson West",
+    "college": "Massachusetts Institute of Technology (MIT)",
+    "gender": "Male",
+    "age": 23,
+    "courses": [
+      {"title": "Biochemistry", "year": 2022},
+      {"title": "Immunology", "year": 2023}
+    ],
+    "progress": "Pending"
+  }
+]
