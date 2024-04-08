@@ -1,1 +1,190 @@
-/* @import "~@ng-select/ng-select/themes/default.theme.css"; */
+/* Add these styles to your component's CSS file */
+.heading-div{
+width: 100%;
+padding-top: 2%;
+
+}
+.heading{
+    font-family: "Poppins", sans-serif;
+    padding-left: 9%;
+ 
+}
+/* Style for the table */
+.table-container{
+    border-radius: 20px;
+    background-color: white;
+    width: 90%;
+    height: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2%;
+    padding-top: 1%;
+    margin-bottom: 20px;
+}
+
+.table {
+   
+    border-collapse: collapse; /* Collapse table borders */
+    margin: auto; /* Center the table horizontally */
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+
+  }
+  
+  /* Style for table header */
+  table th {
+    padding: 0.5%; /* Add padding to table headers */
+    font-weight: 600;
+  
+  
+    
+  }
+  
+  /* Style for table cells */
+  table td {
+    padding: 0.5%; /* Add padding to table cells */
+    border: none; /* Add border to table cells */
+    font-weight: 400;
+    color: gray;
+    max-height: 30px;
+    height: 40px; /* Set a fixed height for table cells */
+    vertical-align: middle; /* Align content vertically in the middle */
+  }
+  
+  /* Style for checkbox column */
+  table input[type="checkbox"] {
+    margin-left: 15px;
+    display: block;
+  }
+  
+  /* Style for buttons in action column */
+  table .btn {
+    margin: 2px; /* Add margin to buttons */
+  }
+
+  .status-button {
+    font-weight: 500;
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.2);  */
+    border-radius: 10px;
+    border: none;
+    width: 80%;
+    padding-top: 4%;
+    padding-bottom: 3%;
+    background: none;
+}
+
+.checkbox-select{
+    border: #2ecc71;
+}
+
+.pending {
+    /* box-shadow: 0px 0px 30px -4px rgba(247,250,87,1); */
+    background-color: #f6faa5; /* Yellow background for Pending */
+    color: #d9ce07;
+}
+
+.completed {
+   
+    /* box-shadow: 0px 0px 30px -4px rgba(132,217,130,1); */
+    background-color: #a5faca;
+    color: green;
+}
+
+.rejected {
+    /* box-shadow: 0px 0px 30px -4px rgba(245,112,112,1); */
+    background-color: #fa9b9b;
+    color: #e60202; /* Red background for Rejected */
+}
+
+.edit-button, .delete-button{
+    background-color: #F4F7F9;
+    color: black;
+    border: none;
+    font-weight: 100;
+    
+}
+
+.header-div{
+    display: flex;
+    justify-self: start;
+    margin-top: 1%;
+    margin-bottom: 1.5%;
+}
+
+.searchbar{
+    width: 80%;
+    justify-items: right;
+    margin-left: auto;
+    margin-top: 0.5%;
+    border-radius: 20px;
+    padding-left: 7%;
+}
+.search-bar-div{
+    position: relative;
+    width: 40%;
+    justify-items: end;
+}
+
+.search-icon{
+    position: absolute;
+    left: 23%;
+    top: 26%;
+}
+.add-button{
+    margin-left: auto;
+    font-weight: 700;
+    font-size:15px;
+}
+.header-buttons-div{
+    display: flex;
+    
+    width: 53%;
+    margin-left: 1%;
+    justify-items: flex-end;
+}
+
+.add-popup-div{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 80%;
+}
+.form-group{
+    margin: 2%;
+}
+.radio-button{
+    margin-left: 2%;
+}
+
+.course-input{
+    margin: 2%;
+}
+
+.add-course-btn{
+    border: none;
+    height: 25px;
+    width: 100px;
+    font-size: 11px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    background-color: #2ecc71;
+    border-radius: 10px;
+    margin-bottom: 3%;
+    padding-left: 1%;
+    padding-right: 1%;
+    color: white;
+}
+.delete-course-btn{
+    border: none;
+    border-radius: 5px;
+    background-color: #e60202;
+    color: white;
+}
+
+.status-buttons{
+    
+    margin-left: 30px;
+}
+
+
+  
