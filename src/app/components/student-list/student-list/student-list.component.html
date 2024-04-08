@@ -2,6 +2,13 @@
 <button (click)="addStudent()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
     Add Student
 </button>
+<!-- <form [formGroup]="searchForm"> -->
+    <!-- Include the search input field -->
+    <!-- <input type="text" class="form-control" formControlName="searchControl" placeholder="Search by name or college">
+  </form> -->
+
+  <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search by name or college" (input)="searchStudents()">
+
 
 <button class="btn btn-danger" [disabled]="isStudentSelected" (click)="deleteSelected()">Delete Selected</button>
 

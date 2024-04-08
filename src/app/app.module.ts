@@ -8,7 +8,7 @@ import { StudentFormComponent } from './components/student-form/student-form/stu
 import { StudentListComponent } from './components/student-list/student-list/student-list.component';
 import { ModalComponent } from './shared/modal/modal/modal.component';
 import { SearchBarComponent } from './components/search-bar/search-bar/search-bar.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { StudentTableComponent } from './components/student-table/student-table/student-table.component';
 
@@ -28,7 +28,8 @@ import { StudentTableComponent } from './components/student-table/student-table/
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

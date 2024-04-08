@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import CollegeData from '../../../../assets/json/colleges.json';
 import StudentData from '../../../../assets/json/students.json';
-import { Subject, debounceTime, map } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, map } from 'rxjs';
 
 @Component({
   selector: 'app-student-list',
@@ -36,6 +36,11 @@ export class StudentListComponent {
   paginatedData: any[] = [];
   selectedItems: any[] = [];
   isStudentSelected = true;
+  searchQuery : any;
+  searchForm: FormGroup;
+  filteredStudents : any[] = [];
+
+  
   //totalPages: any;
 
   constructor(private fb: FormBuilder) {
@@ -45,10 +50,13 @@ export class StudentListComponent {
   ngOnInit(): void {
     this.colleges = CollegeData;
     this.collegeList = this.colleges.slice(0, this.bufferSize);
-    
-    //this.students = JSON.parse(localStorage.getItem('StudentDetails'));
     this.initializeStudentData(); 
     this.isEditModalOpen = false;
+
+    this.searchForm = this.fb.group({
+      searchControl: [''] // Initialize with an empty string
+    });
+
 
     //college search
     this.searchTerm$
@@ -61,6 +69,34 @@ export class StudentListComponent {
           college.name.toLowerCase().includes(searchTerm)
         );
       });
+
+    
+      // this.searchControl.valueChanges.pipe(
+      //   debounceTime(300), // Debounce input for 300 milliseconds
+      //   distinctUntilChanged(), // Only emit if the value has changed
+      //   map((value: string) => value.trim().toLowerCase()) // Transform input value to lowercase and trim whitespace
+      // ).subscribe(searchQuery => {
+      //   // Filter students based on search query
+      //   console.log("search", searchQuery);
+      //   this.students = this.filterStudents(searchQuery);
+      // });
+  }
+  searchStudents(): void {
+    // If search query is empty, display all students
+    console.log("Search", this.filteredStudents)
+    if (!this.searchQuery.trim()) {
+      this.students = this.students;
+    } else {
+      // Filter students based on search query
+      console.log("Some Filter Happening")
+      this.filteredStudents = this.students.filter(student => {
+        // Check if student name or college contains the search query (case-insensitive)
+        return student.studentName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+               student.college.toLowerCase().includes(this.searchQuery.toLowerCase());
+               
+      });
+    }
+    this.paginateData();
   }
 
 
@@ -254,7 +290,12 @@ export class StudentListComponent {
   paginateData(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
+    if(this.filteredStudents.length > 0){
+      this.paginatedData = this.filteredStudents.slice(startIndex, endIndex);
+    }
+    else{
     this.paginatedData = this.students.slice(startIndex, endIndex);
+    }
     console.log("paginateddata", this.paginatedData);
   }
 
